@@ -10,14 +10,36 @@ image.src = 'fair_map.JPG';
 
 var ctx = canvas.getContext("2d");
 
-var aquabot_x = 0;
-var aquabot_y = 0;
+var start_lat = 40.416623;
+var start_long = -74.883628;
+var end_lat = 40.413900;
+var end_long = -74.880168;
+
+var long_dist = start_long - end_long;
+var lat_dist = start_lat - end_lat;
+
+var start_x = 0;
+var start_y = 0;
+var end_x = 808;
+var end_y = 831;
+
+var dist_x = start_x - end_x;
+var dist_y = start_y - end_y;
+
+var aquabot_lat = 40.415291;
+var aquabot_long  = -74.882275;
+
+console.log('Starting Loop');
 
 window.setInterval(function(){
 
+
   // Test moving aquabot
-  aquabot_x += 1;
-  aquabot_y += 1;
+  //aquabot_long += .00001;
+  //aquabot_lat += .00001;
+
+  var aquabot_x = ((aquabot_long - start_long)/long_dist)*dist_x + start_x;
+  var aquabot_y = ((aquabot_lat - start_lat)/lat_dist)*dist_y + start_y;
 
   // Clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -29,6 +51,6 @@ window.setInterval(function(){
   ctx.fillStyle = "#0600ff";
 
   // Draw the rectangle marker
-  ctx.fillRect(aquabot_x, aquabot_y, 3, 3);
+  ctx.fillRect(aquabot_x - 10, aquabot_y - 10, 20, 20);
 }, 10);
 
