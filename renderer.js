@@ -2,11 +2,9 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-serial = require("serialport");
+SerialPort = require("serialport");
 
 console.log("HELLO");
-
-console.log(serial);
 
 var canvas = document.getElementById("fair_image");
 var image = new Image();
@@ -50,6 +48,21 @@ var dist_y = start_y - end_y;
 
 var aquabot_lat  = 40.671547;
 var aquabot_long = -74.840057;
+
+var port = new SerialPort("/dev/usbtop", {
+  baudRate: 9600,
+  parser: SerialPort.parsers.readline('\n')
+});
+
+port.on('data', function (data) {
+  console.log('Data: ' + data);
+  var parsed = data.split(":");
+  console.log(parsed);
+  aquabot_lat = parsed[3];
+  console.log(aquabot_lat);
+  aquabot_long = parsed[4];
+  console.log(aquabot_long);
+});
 
 console.log('Starting Loop');
 
