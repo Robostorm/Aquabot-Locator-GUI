@@ -2,32 +2,54 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
+serial = require("serialport");
+
 console.log("HELLO");
+
+console.log(serial);
 
 var canvas = document.getElementById("fair_image");
 var image = new Image();
-image.src = 'fair_map.JPG';
 
 var ctx = canvas.getContext("2d");
+
+// Fair map
+/*
+image.src = 'fair_map.JPG';
 
 var start_lat = 40.416623;
 var start_long = -74.883628;
 var end_lat = 40.413900;
 var end_long = -74.880168;
 
-var long_dist = start_long - end_long;
-var lat_dist = start_lat - end_lat;
-
 var start_x = 0;
 var start_y = 0;
 var end_x = 808;
 var end_y = 831;
+*/
+
+// Tim's House
+image.src = 'map.png';
+
+var start_lat  = 40.672233;
+var start_long = -74.841474;
+var end_lat    = 40.671406;
+var end_long   = -74.839740;
+
+var start_x = 0;
+var start_y = 0;
+var end_x   = 955;
+var end_y   = 598;
+
+
+var long_dist = start_long - end_long;
+var lat_dist  = start_lat - end_lat;
 
 var dist_x = start_x - end_x;
 var dist_y = start_y - end_y;
 
-var aquabot_lat = 40.415291;
-var aquabot_long  = -74.882275;
+var aquabot_lat  = 40.671547;
+var aquabot_long = -74.840057;
 
 console.log('Starting Loop');
 
