@@ -77,14 +77,12 @@ function redraw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(image, 0, 0, image.width * scale, image.height * scale);
 
-  // Set the color
-  ctx.fillStyle = "#0600ff";
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = "#000099";
 
-  // Draw the rectangle marker
-  //ctx.fillRect(aquabot_x - 10, aquabot_y - 10, 20, 20);
-  ctx.lineWidth = 3;
   ctx.beginPath();
   ctx.arc(aquabot_x, aquabot_y, 15, 0, 2*Math.PI, 0);
+
   ctx.moveTo(aquabot_x - 20, aquabot_y);
   ctx.lineTo(aquabot_x + 20, aquabot_y);
   ctx.moveTo(aquabot_x, aquabot_y - 20);
@@ -100,7 +98,7 @@ function redraw() {
     ctx.fillText("No fix", 10, 50);
   }
 
-  ctx.fillStyle = "#ffffff"
+  ctx.fillStyle = "#000000"
   ctx.fillText(satelites + " Satelites", 10, 100);
 }
 
