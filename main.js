@@ -50,13 +50,16 @@ var dist_y = start_y - end_y;
 var aquabot_lat = 40.671547;
 var aquabot_long = -74.840057;
 
+var fix = 0;
+var satelites = 0;
+
 // Clear the canvas
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-ctx.clearRect(0, 0, canvas.width, canvas.height);
-ctx.drawImage(image, 0, 0);
 
 function resize() {
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
   var img_ratio = image.height / image.width;
   var screen_ratio = window.innerHeight / window.innerWidth;
 
@@ -78,12 +81,30 @@ function redraw() {
   ctx.fillStyle = "#0600ff";
 
   // Draw the rectangle marker
-  ctx.fillRect(aquabot_x - 10, aquabot_y - 10, 20, 20);
+  //ctx.fillRect(aquabot_x - 10, aquabot_y - 10, 20, 20);
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.arc(aquabot_x, aquabot_y, 15, 0, 2*Math.PI, 0);
+  ctx.moveTo(aquabot_x - 20, aquabot_y);
+  ctx.lineTo(aquabot_x + 20, aquabot_y);
+  ctx.moveTo(aquabot_x, aquabot_y - 20);
+  ctx.lineTo(aquabot_x, aquabot_y + 20);
+  ctx.stroke();
+
+  ctx.font = "48px serif";
+  if(fix > 0) {
+    ctx.fillStyle = "#009900"
+    ctx.fillText("Fix!", 10, 50);
+  } else {
+    ctx.fillStyle = "#ff0000"
+    ctx.fillText("No fix", 10, 50);
+  }
+
+  ctx.fillStyle = "#ffffff"
+  ctx.fillText(satelites + " Satelites", 10, 100);
 }
 
 window.onresize = function () {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
   resize()
   redraw()
 }
@@ -135,6 +156,8 @@ socket.onmessage = function (event) {
         //console.log(aquabot_lat);
         aquabot_long = parsed[4];
         //console.log(aquabot_long);
+        fix = parsed[1];
+        satelites = parsed[2];
 
         // Test moving aquabot
         //aquabot_long += .00001;
@@ -162,6 +185,9 @@ function updateSerial() {
 
   // Open the new port
   socket.send("open " + port.Name + " 9600");
+
+  resize();
+  redraw();
 }
 
 portselect.onchange = updateSerial;
